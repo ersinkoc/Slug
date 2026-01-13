@@ -1,0 +1,78 @@
+{
+  "name": "@oxog/slug",
+  "version": "1.0.0",
+  "description": "Zero-dependency URL slug generator with Unicode transliteration and language-aware transformations",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./plugins": {
+      "import": {
+        "types": "./dist/plugins/index.d.ts",
+        "default": "./dist/plugins/index.js"
+      },
+      "require": {
+        "types": "./dist/plugins/index.d.cts",
+        "default": "./dist/plugins/index.cjs"
+      }
+    }
+  },
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm run test:coverage"
+  },
+  "keywords": [
+    "slug",
+    "slugify",
+    "url",
+    "transliteration",
+    "unicode",
+    "ascii",
+    "permalink",
+    "seo",
+    "url-safe",
+    "kebab-case",
+    "zero-dependency"
+  ],
+  "author": "Ersin Koç",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ersinkoc/slug.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ersinkoc/slug/issues"
+  },
+  "homepage": "https://slug.oxog.dev",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
+  }
+}

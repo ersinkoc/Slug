@@ -1,0 +1,121 @@
+# @oxog/slug
+
+Zero-dependency URL slug generator with Unicode transliteration and language-aware transformations.
+
+## Install
+
+```bash
+npm install @oxog/slug
+```
+
+## Basic Usage
+
+```typescript
+import { slug } from '@oxog/slug';
+
+slug('Hello World!');           // 'hello-world'
+slug('Merhaba Dünya', { locale: 'tr' }); // 'merhaba-dunya'
+```
+
+## API Summary
+
+### Main Functions
+- `slug(input, options?)` - Generate URL slug
+- `createSlugger()` - Create stateful instance for duplicates
+- `createKernel()` - Create kernel for plugins
+
+### Options
+- `separator` - Word separator (default: '-')
+- `lowercase` - Convert to lowercase (default: true)
+- `locale` - Language rules ('de', 'tr', 'ru', 'ar', 'zh', 'ja', 'el')
+- `maxLength` - Max length with word boundary
+- `strict` - Cut exactly at maxLength (default: false)
+- `replacements` - Custom replacement map
+- `reserved` - Reserved words to avoid
+- `reservedSuffix` - Suffix for reserved words (default: '-1')
+- `trim` - Trim leading/trailing separators (default: true)
+
+### Core Plugins
+- `normalizer` - Unicode normalization (NFD/NFC)
+- `transliterator` - Unicode to ASCII
+- `sanitizer` - Invalid character removal
+
+### Optional Plugins
+- `locale-de` - German rules (ä→ae, ö→oe, ü→ue, ß→ss)
+- `locale-tr` - Turkish rules (ı→i, ğ→g, ş→s)
+- `locale-ru` - Russian Cyrillic
+- `locale-ar` - Arabic transliteration
+- `locale-zh` - Chinese Pinyin
+- `locale-ja` - Japanese Romaji
+- `locale-el` - Greek transliteration
+- `counter` - Duplicate handling
+- `reserved` - Reserved word protection
+- `truncator` - Smart truncation
+
+## Common Patterns
+
+### Basic Slug
+```typescript
+slug('Hello World!'); // 'hello-world'
+```
+
+### Locale-Specific
+```typescript
+slug('Größe', { locale: 'de' }); // 'groesse'
+slug('İstanbul', { locale: 'tr' }); // 'istanbul'
+slug('Москва', { locale: 'ru' }); // 'moskva'
+```
+
+### Custom Replacements
+```typescript
+slug('C++ Code', { replacements: { '++': 'pp' } }); // 'cpp-code'
+```
+
+### Duplicate Handling
+```typescript
+const slugger = createSlugger();
+slugger.slug('title'); // 'title'
+slugger.slug('title'); // 'title-1'
+```
+
+### Truncation
+```typescript
+slug('Long Title Here', { maxLength: 10 }); // 'long-title'
+```
+
+### With Custom Separator
+```typescript
+slug('Hello World', { separator: '_' }); // 'hello_world'
+```
+
+### Preserve Case
+```typescript
+slug('API v2.0', { lowercase: false }); // 'API-v2-0'
+```
+
+### Reserved Words
+```typescript
+slug('admin', { reserved: ['admin'] }); // 'admin-1'
+```
+
+### Plugin Usage
+```typescript
+const kernel = createKernel();
+kernel.use(...corePlugins, localeDePlugin);
+kernel.slug('Größe'); // 'groesse'
+```
+
+## Errors
+
+| Code | Meaning | Solution |
+|------|---------|----------|
+| `INVALID_INPUT` | Input not a string | Pass string to slug() |
+| `INVALID_SEPARATOR` | Invalid separator | Use single char separator |
+| `PLUGIN_NOT_FOUND` | Plugin not registered | Register plugin first |
+| `CIRCULAR_DEPENDENCY` | Plugins depend on each other | Fix plugin dependencies |
+
+## Links
+
+- Docs: https://slug.oxog.dev
+- GitHub: https://github.com/ersinkoc/slug
+- NPM: https://www.npmjs.com/package/@oxog/slug

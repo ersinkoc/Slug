@@ -1,0 +1,24 @@
+# @oxog/slug
+
+Zero-dependency URL slug generator with Unicode transliteration and language-aware transformations.
+
+## Install
+
+```bash
+npm install @oxog/slug
+```
+
+## Quick Start
+
+```typescript
+import { slug } from '@oxog/slug';
+
+slug('Hello World!');           // 'hello-world'
+slug('Größe', { locale: 'de' }); // 'groesse'
+```
+
+## Links
+
+- Documentation: https://slug.oxog.dev
+- GitHub: https://github.com/ersinkoc/slug
+- NPM: https://www.npmjs.com/package/@oxog/slug
